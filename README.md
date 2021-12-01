@@ -42,7 +42,7 @@ Para ejecutar el siguiente código se requiere:
 
 ### Prerequisitos.
 
-- Clonar el repositorio https://github.com/disruptica/SITE y abrir la terminar en la raíz del proyecto
+- Clonar el repositorio https://github.com/EL-BID/site_sistemapagos_scl_sph y abrir la terminar en la raíz del proyecto
 - Instalar Openssl e Istioctl
 
       cd kubernetes
