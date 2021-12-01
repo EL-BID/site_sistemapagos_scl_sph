@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "nginx.fullname" . }}
+  labels:
+    {{- include "nginx.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "nginx.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nginx.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nginx.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              hostPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: https
+              containerPort: {{ .Values.service.httpsport }}
+              hostPort: {{ .Values.service.httpsport }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ .Values.volumes.configname }}
+              mountPath: /etc/nginx/proxy.conf
+              subPath: proxy.conf
+            - name: {{ .Values.volumes.configname }}
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: {{ .Values.volumes.certsname }}
+              mountPath: /etc/letsencrypt/localhost.crt
+              subPath: nginx-crt
+            - name: {{ .Values.volumes.certsname }}
+              mountPath: /etc/letsencrypt/localhost.key
+              subPath: nginx-key
+      volumes:
+        - name: {{ .Values.volumes.configname }}
+          configMap:
+            name: {{ .Values.volumes.configMapName }}
+        - name: {{ .Values.volumes.certsname }}
+          secret:
+            secretName: {{ .Values.volumes.secretName }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

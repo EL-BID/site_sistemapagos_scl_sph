@@ -1,0 +1,265 @@
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+/*
+Typography 
+*/
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Gugi);
+
+// Set your colors
+$body-background: #fdfdfd;
+$primary: #4aa3bb;
+$primary-light: findLightColor($primary);
+$primary-dark: #236e81;
+$primary-invert: findColorInvert($primary);
+$success: #89d877;
+$warning: #ffbb00;
+$info: $primary;
+$family-primary: 'Roboto Condensed';
+$family-secondary: 'Roboto', sans-serif;
+$shadow: none;
+$footer-background-color: $body-background;
+$footer-padding: 3rem 1.5rem 2rem;
+$footer-color: #bfbfbf;
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: mergeColorMaps(
+  (
+    "white": (
+      $white,
+      $black
+    ),
+    "black": (
+      $black,
+      $white
+    ),
+    "light": (
+      $light,
+      $light-invert
+    ),
+    "dark": (
+      $dark,
+      $dark-invert
+    ),
+    "primary": (
+      $primary,
+      $primary-invert,
+      $primary-light,
+      $primary-dark
+    ),
+    "link": (
+      $link,
+      $link-invert,
+      $link-light,
+      $link-dark
+    ),
+    "info": (
+      $info,
+      $info-invert,
+      $info-light,
+      $info-dark
+    ),
+    "success": (
+      $success,
+      $success-invert,
+      $success-light,
+      $success-dark
+    ),
+    "warning": (
+      $warning,
+      $warning-invert,
+      $warning-light,
+      $warning-dark
+    ),
+    "danger": (
+      $danger,
+      $danger-invert,
+      $danger-light,
+      $danger-dark
+    )
+  ),
+  $custom-colors
+);
+
+//table
+$table-head-background-color: #f7f7f7;
+$table-striped-row-even-hover-background-color: $primary-light;
+$pagination-current-background-color: $primary;
+$pagination-current-border-color: $primary;
+$pagination-active-border-color: $primary;
+$pagination-hover-border-color: $primary;
+$pagination-focus-border-color: $primary;
+
+//input
+$input-current-border-color: $primary;
+$input-active-border-color: $primary;
+$input-hover-border-color: $primary;
+$input-focus-border-color: $primary;
+$input-focus-box-shadow-color: rgba($primary, 0.25);
+
+//button
+$button-current-border-color: $primary;
+$button-active-border-color: $primary;
+$button-hover-border-color: $primary;
+$button-focus-border-color: $primary;
+$button-focus-box-shadow-color: rgba($primary, 0.25);
+//modal
+$modal-background-background-color: bulmaRgba($scheme-invert, 0.6);
+
+//panel
+$panel-heading-background-color: $primary-dark;
+$panel-heading-color: $white;
+$panel-radius: 0.25rem;
+$panel-item-border: 20px solid $white;
+$panel-shadow: none;
+//card
+$card-header-shadow: none;
+$card-shadow: none;
+
+//link
+$link: #363636;
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+// custom styles
+.logo {
+  font-family: 'Gugi', sans-serif;
+}
+
+.elementIcon::before {
+  font-size: 80px !important;
+}
+
+.subtitle .icon {
+  height: 3rem;
+  width: 3rem;
+
+  i:before {
+    font-size: 3rem;
+    margin-right: 1rem;
+  }
+}
+
+.b-sidebar {
+  .sidebar-content {
+    background-color: $primary-dark;
+  }
+}
+
+.main-content {
+  min-height: calc(100vh - 64px - 104px);
+}
+
+span.file-name {
+  flex-grow: 1;
+  max-width: 100%;
+  width: 100%;
+}
+
+label.upload.control.file-label {
+  width: 100%;
+}
+
+.form-beneficiarios .field.custom {
+  width: 300px;
+}
+
+.table th {
+  border-bottom: 3px solid #64b0c3;
+  border-bottom-width: 3px !important;
+}
+
+.panel-block {
+  border: 1px solid #6498a6;
+}
+
+.card-header,
+.collapse-content,
+.dropdown-content {
+  border: 1px solid #e7e7e7;
+}
+
+.panel-heading.has-text-danger {
+  background-color: #fbfbfb;
+  border: 1px solid;
+}
+
+.list-errors .notification {
+  overflow-y: auto;
+  max-height: 218px;
+}
+
+.align-items-flex-end div {
+  align-items: flex-end !important;
+}
+
+.dropdown {
+  width: 100%;
+  .dropdown-trigger {
+    width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.card-header.is-danger {
+  background-color: $danger;
+}
+
+.card-header.is-warning {
+  background-color: $warning;
+}
+
+.card-header.is-success {
+  background-color: $success;
+}
+
+.card-header.is-info {
+  background-color: $info;
+}
+
+.menu-list a {
+  border-bottom: solid 1px rgba(255, 255, 255, .5);
+  color: $white;
+}
+
+.b-sidebar .sidebar-content.is-fullheight {
+  max-width: 80vw;
+  width: 400px;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.field.is-grouped.is-grouped-multiline {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.dashboardSection .sectionContent {
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+}
+
+.dashboardSection .sectionContent li a {
+  max-width: 155px;
+}
+
+.dashboardSection .sectionContent li a span.icon {
+  height: 80px;
+  width: 80px;
+}
+
+.dashboardSection .sectionContent li:hover i:before {
+  color: $primary;
+}
+
+.message-alert {
+  max-width: 500px;
+  min-width: 250px;
+}

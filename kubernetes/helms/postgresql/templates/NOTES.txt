@@ -1,0 +1,31 @@
+To connect to your database from outside the cluster execute the following commands:
+
+{{- if contains "NodePort" .Values.service.type }}
+
+    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "postgresql.fullname" . }})
+    {{ if (include "postgresql.password" . )  }}PGPASSWORD="$POSTGRES_PASSWORD" {{ end }}psql --host $NODE_IP --port $NODE_PORT -U {{ .Values.postgresqlUsername }} -d {{- if .Values.postgresqlDatabase }} {{ .Values.postgresqlDatabase }}{{- else }} postgres{{- end }}
+
+{{- else if contains "LoadBalancer" .Values.service.type }}
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "postgresql.fullname" . }}'
+
+    export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "postgresql.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+    {{ if (include "postgresql.password" . ) }}PGPASSWORD="$POSTGRES_PASSWORD" {{ end }}psql --host $SERVICE_IP --port {{ template "postgresql.port" . }} -U {{ .Values.postgresqlUsername }} -d {{- if .Values.postgresqlDatabase }} {{ .Values.postgresqlDatabase }}{{- else }} postgres{{- end }}
+
+{{- else if contains "ClusterIP" .Values.service.type }}
+
+    kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ template "postgresql.fullname" . }} {{ template "postgresql.port" . }}:{{ template "postgresql.port" . }} &
+    {{ if (include "postgresql.password" . ) }}PGPASSWORD="$POSTGRES_PASSWORD" {{ end }}psql --host 127.0.0.1 -U {{ .Values.postgresqlUsername }} -d {{- if .Values.postgresqlDatabase }} {{ .Values.postgresqlDatabase }}{{- else }} postgres{{- end }} -p {{ template "postgresql.port" . }}
+
+{{- end }}
+
+{{- include "postgresql.validateValues" . -}}
+
+{{- if and (contains "bitnami/" .Values.image.repository) (not (.Values.image.tag | toString | regexFind "-r\\d+$|sha256:")) }}
+
+WARNING: Rolling tag detected ({{ .Values.image.repository }}:{{ .Values.image.tag }}), please note that it is strongly recommended to avoid using rolling tags in a production environment.
++info https://docs.bitnami.com/containers/how-to/understand-rolling-tags-containers/
+
+{{- end }}
