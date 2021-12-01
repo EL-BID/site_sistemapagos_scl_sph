@@ -9,8 +9,6 @@
 <p align="center"><img src="https://github.com/BID-SCL/site_sistemapagos_sph/raw/master/docs/images/MenuLateral.png"/></p> 
 
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=EL-BID_guia-de-publicacion&metric=alert_status)](https://sonarcloud.io/dashboard?id=EL-BID_guia-de-publicacion)
-
 
 ## Descripción y contexto.
 ---
