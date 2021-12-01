@@ -1,5 +1,6 @@
 
 [![Analytics](https://gabeacon.irvinlim.com/UA-4677001-16/site_sistemapagos_scl_sph/readme?useReferer)](https://github.com/EL-BID/site_sistemapagos_scl_sph)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=EL-BID_site_sistemapagos_scl_sph&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=EL-BID_site_sistemapagos_scl_sph)
 
 <h1 align="center"> SITE - Sistema Informático de Transferencias de Emergencia</h1>
 
